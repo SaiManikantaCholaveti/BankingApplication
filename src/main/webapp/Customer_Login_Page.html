@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Login Page</title>
+    <style>
+        .login {
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 1em;
+            border: 1px solid #ccc;
+            border-radius: 1em;
+        }
+        .login h1 {
+            text-align: center;
+        }
+        .login div {
+            margin-bottom: 1em;
+        }
+        .login input {
+            width: 100%;
+            padding: 0.5em;
+            box-sizing: border-box;
+        }
+        .login button {
+            width: 100%;
+            padding: 0.7em;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 0.3em;
+            cursor: pointer;
+        }
+        .login button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="login">
+        <form action="Customer_Dashboard.html" method="post"> 
+            <h1>Customer Login Page</h1>
+            <div>
+                <input type="text" name="username" placeholder="Username" required> 
+            </div>
+            <div>
+                <input type="password" id="dob" name="dob" required placeholder="Your Registered DOB">
+            </div>
+            <button type="submit" class="login__button">Login</button>
+        </form>
+    </div>
+</body>
+</html>

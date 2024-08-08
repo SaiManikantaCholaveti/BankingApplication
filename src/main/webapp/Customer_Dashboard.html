@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .dashboard-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        h1 {
+            color: blue;
+        }
+        .details-item {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        .details-item strong {
+            margin-right: 5px;
+        }
+        .details-item .icon {
+            margin-right: 8px;
+            color: #333;
+        }
+        .input-container {
+            margin: 10px 0;
+        }
+        .input-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-container input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .input-container i {
+            margin-right: 8px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .download-btn {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .download-btn:hover {
+            text-decoration: underline;
+        }
+        #transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        #transaction-table th, #transaction-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        #transaction-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Customer Dashboard</h1>
+    <div class="dashboard-container">
+        <a class="details-item" href="Index.html" style="float: right;">Log Out</a>
+        <h2>Welcome to Your Dashboard!</h2>
+        <div class="details-item">
+            <i ></i><strong></strong> <span id="full_name"></span>
+        </div>
+        <div class="details-item">
+            <i class="fas fa-id-card icon"></i><strong>Account No:</strong> <span id="account"></span>
+        </div>
+        <div class="details-item">
+            <i class="fas fa-home icon"></i><strong>Address:</strong> <span id="address"></span>
+        </div>
+        
+            <i ></i><strong></strong> <span id="mobile_no"></span>
+        
+        <div class="details-item">
+            <i class="fas fa-envelope icon"></i><strong>Email:</strong> <span id="email"></span>
+        </div>
+        <div class="details-item">
+            <i class="fas fa-credit-card icon"></i><strong>Account Type:</strong> <span id="accountType"></span>
+        </div>
+        <div class="details-item">
+            <i ></i><strong>Balance:</strong> <span id="balance"></span>
+        </div>
+        
+        <h2>Deposit Amount</h2>
+        <form action="BankingOperations" method="post">
+            <div class="input-container">
+                <label for="account-no"><i class="fas fa-user"></i> Account Number:</label>
+                <input type="text" id="account-no" name="accountNumber" placeholder="Enter your account number" required>
+            </div>
+            <div class="input-container">
+                <label for="password"><i class="fas fa-lock"></i> Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="input-container">
+                <label for="DepositAmount"><i class="fas fa-money-bill"></i> Deposit Amount:</label>
+                <input type="text" id="DepositAmount" name="amount" placeholder="Enter Amount" required>
+            </div>
+            <button type="submit">Deposit</button>
+        </form>
+
+        <h2>Withdraw Amount</h2>
+        <form action="BankingOperations" method="post">
+            <div class="input-container">
+                <label for="account-no-withdraw"><i class="fas fa-user"></i> Account Number:</label>
+                <input type="text" id="account-no-withdraw" name="accountNumber" placeholder="Enter your account number" required>
+            </div>
+            <div class="input-container">
+                <label for="password-withdraw"><i class="fas fa-lock"></i> Password:</label>
+                <input type="password" id="password-withdraw" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="input-container">
+                <label for="WithdrawAmount"><i class="fas fa-money-bill"></i> Withdraw Amount:</label>
+                <input type="text" id="WithdrawAmount" name="withdrawAmount" placeholder="Enter Amount" required>
+            </div>
+            <button type="submit">Withdraw</button>
+        </form>
+         <div class="transactions">
+            <h2>Transaction History</h2>
+            <table id="transaction-table">
+                <!-- Transaction data rows go here -->
+            </table>
+            <a href="TransactionHistoryServlet?download=true" class="download-btn">Download Transaction History</a>
+            <button class="refresh-btn" onclick="refreshPage()">Refresh</button>
+            <form action="GeneratePDFServlet" method="post">
+                <input type="hidden" name="data" value="transactions">
+                <!-- <button type="submit" class="dialog-button">Print as PDF</button>-->
+            </form>
+        </div>
+        
+    
+      <!--    <p style="color:red;">Note: Make sure to refresh the page after any transaction to download the transaction history.</p>
+        <h2>Transaction History</h2>
+        <table id="transaction-table">
+            <!-- Transaction history will be displayed here 
+        </table>
+        <a href="TransactionHistoryServlet?download=true" class="download-btn" download>Download Transaction History</a>
+
+        <button onclick="refreshPage()">Refresh</button>-->
+    </div>
+
+    <script>
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        function updatePage() {
+            var full_name = getUrlParameter('full_name');
+            var address = getUrlParameter('address');
+            var account = getUrlParameter('account');
+            var mobile_no = getUrlParameter('mobile_no');
+            var email = getUrlParameter('email');
+            var accountType = getUrlParameter('accountType');
+            var balance = getUrlParameter('balance');
+
+            console.log('Full Name:', full_name);
+            console.log('Address:', address);
+            console.log('Account No:', account);
+            console.log('Mobile No:', mobile_no);
+            console.log('Email:', email);
+            console.log('Account Type:', accountType);
+            console.log('balance:',balance);
+
+            document.getElementById('full_name').textContent = full_name;
+            document.getElementById('address').textContent = address || 'N/A';
+            document.getElementById('account').textContent = account || 'N/A';
+            document.getElementById('mobile_no').textContent = mobile_no;
+            document.getElementById('email').textContent = email || 'N/A';
+            document.getElementById('accountType').textContent = accountType || 'N/A';
+            document.getElementById('balance').textContent = balance || 'N/A';
+        }
+
+        function fetchTransactionHistory() {
+            fetch('TransactionHistoryServlet')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('transaction-table').innerHTML = data;
+                })
+                .catch(error => console.error('Error fetching transaction history:', error));
+        }
+
+        function refreshPage() {
+            location.reload();
+        }
+
+        updatePage();
+        fetchTransactionHistory();
+    </script>
+</body>
+</html>
